@@ -3,7 +3,6 @@ import Card from "./Card";
 import programming from "./assets/programming.svg";
 import meditation from "./assets/meditation.svg";
 import time_managment from "./assets/time_managment.svg";
-import Indicators from "./Indicators";
 
 function App() {
   const tutorialData = [
@@ -30,6 +29,7 @@ function App() {
     },
   ];
   const [step, setStep] = useState(0);
+  const [animateToLeft, setAnimateToLeft] = useState(true);
 
   const currentCardData = tutorialData[step];
 
@@ -37,11 +37,17 @@ function App() {
     setStep(clickedStep);
   }
   function nextStep() {
-    setStep((next) => next + 1);
+    setStep((prev) => {
+      setAnimateToLeft(false);
+      return prev + 1;
+    });
   }
 
   function prevStep() {
-    setStep((prev) => prev - 1);
+    setStep((prev) => {
+      setAnimateToLeft(true);
+      return prev - 1;
+    });
   }
 
   return (
@@ -58,6 +64,7 @@ function App() {
         totalSteps={tutorialData.length}
         currentStep={step}
         toStep={toStep}
+        animateToLeft={animateToLeft}
       />
     </div>
   );
